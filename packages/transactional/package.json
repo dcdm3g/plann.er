@@ -1,0 +1,23 @@
+{
+  "name": "transactional",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    ".react-email"
+  ],
+  "scripts": {
+    "dev": "email dev -p 3001"
+  },
+  "dependencies": {
+    "@react-email/components": "0.0.21",
+    "date-fns": "^3.6.0",
+    "react": "^18.3.1",
+    "react-email": "2.1.5"
+  },
+  "devDependencies": {
+    "@rocketseat/eslint-config": "^2.2.2",
+    "@types/react": "^18.3.3",
+    "eslint": "8.57.0",
+    "typescript": "^5.5.3"
+  }
+}
