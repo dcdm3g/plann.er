@@ -1,5 +1,5 @@
 {
-  "name": "api",
+  "name": "@plann.er/api",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -7,12 +7,13 @@
     "lint": "eslint . --fix"
   },
   "dependencies": {
+    "@fastify/cors": "^9.0.1",
+    "@plann.er/mail": "workspace:*",
     "@prisma/client": "5.16.2",
     "date-fns": "^3.6.0",
     "fastify": "^4.28.1",
     "fastify-type-provider-zod": "^2.0.0",
     "resend": "^3.4.0",
-    "transactional": "workspace:*",
     "zod": "^3.23.8"
   },
   "devDependencies": {

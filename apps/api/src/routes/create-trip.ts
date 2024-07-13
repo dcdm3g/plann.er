@@ -4,7 +4,7 @@ import { isBefore, isFuture } from 'date-fns'
 import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
 import { resend } from '@/lib/resend'
-import ConfirmationTemplate from 'transactional/emails/confirmation'
+import { ConfirmationTemplate } from '@plann.er/mail'
 
 export async function createTrip(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
