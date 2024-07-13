@@ -1,12 +1,17 @@
 import { fastify } from 'fastify'
+import cors from '@fastify/cors'
 import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
-import cors from '@fastify/cors'
 
 import { createTrip } from '@/routes/create-trip'
-import { confirmTrip } from './routes/confirm-trip'
+import { confirmTrip } from '@/routes/confirm-trip'
+import { confirmParticipant } from '@/routes/confirm-participant'
+import { createActivity } from '@/routes/create-activity'
+import { getActivities } from '@/routes/get-activities'
+import { createLink } from '@/routes/create-link'
+import { getLinks } from '@/routes/get-links'
 
 const app = fastify()
 
@@ -17,6 +22,11 @@ app.setValidatorCompiler(validatorCompiler)
 
 app.register(createTrip)
 app.register(confirmTrip)
+app.register(confirmParticipant)
+app.register(createActivity)
+app.register(createLink)
+app.register(getActivities)
+app.register(getLinks)
 
 app.listen({ port: 3333 }).then(() => {
   console.log('HTTP Server Running 🚀')

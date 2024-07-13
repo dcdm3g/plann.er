@@ -1,5 +1,6 @@
 {
-  "name": "transactional",
+  "name": "@plann.er/mail",
+  "main": "main.ts",
   "version": "1.0.0",
   "private": true,
   "workspaces": [

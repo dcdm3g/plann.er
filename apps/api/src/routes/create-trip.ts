@@ -4,7 +4,8 @@ import { isBefore, isFuture } from 'date-fns'
 import { z } from 'zod'
 import { prisma } from '@/lib/prisma'
 import { resend } from '@/lib/resend'
-import { ConfirmationTemplate } from '@plann.er/mail'
+import { TripConfirmationTemplate } from '@plann.er/mail'
+import { env } from '@/env'
 
 export async function createTrip(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -47,8 +48,8 @@ export async function createTrip(app: FastifyInstance) {
                   isOwner: true,
                   isConfirmed: true,
                 },
+                ...emailsToInvite.map((email) => ({ email })),
               ],
-              ...emailsToInvite.map((e) => ({ email: e })),
             },
           },
         },
@@ -58,11 +59,11 @@ export async function createTrip(app: FastifyInstance) {
         from: 'Plann.er Team <hi@resend.dev>',
         to: [ownerEmail],
         subject: '[Plann.er] Confirm your trip',
-        react: ConfirmationTemplate({
+        react: TripConfirmationTemplate({
           destination,
           startsAt,
           endsAt,
-          confirmationLink: `http://localhost:3000/trips/${id}/confirm`,
+          confirmationLink: `${env.API_BASE_URL}/trips/${id}/confirm`,
         }),
       })
 
