@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 export default function Home() {
   return (
-    <div className="bg-background-pattern flex min-h-screen items-center justify-center bg-center bg-no-repeat px-10 py-28">
+    <div className="flex min-h-screen items-center justify-center bg-background-pattern bg-center bg-no-repeat px-10 py-28">
       <main className="flex w-full max-w-3xl flex-col items-center gap-10">
         <div className="flex flex-col items-center gap-3">
           <Image src="/logo.svg" alt="Plann.er" width={157} height={33} />
