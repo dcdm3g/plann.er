@@ -11,8 +11,14 @@ export async function createInvite(app: FastifyInstance) {
     '/trips/:tripId/invites',
     {
       schema: {
+        summary: 'Create an invite in a trip.',
+        tags: ['trips'],
         params: z.object({ tripId: z.string().uuid() }),
         body: z.object({ email: z.string().email() }),
+        response: {
+          201: z.object({ id: z.string().uuid() }),
+          404: z.object({ message: z.literal('Trip not found.') }),
+        },
       },
     },
     async (req, rep) => {
@@ -24,7 +30,7 @@ export async function createInvite(app: FastifyInstance) {
       })
 
       if (!trip) {
-        return rep.status(404).send({ message: 'Trip nkt found.' })
+        return rep.status(404).send({ message: 'Trip not found.' })
       }
 
       const { id } = await prisma.participant.create({
@@ -43,7 +49,7 @@ export async function createInvite(app: FastifyInstance) {
         }),
       })
 
-      return { id }
+      return rep.status(201).send({ id })
     },
   )
 }

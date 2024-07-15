@@ -7,7 +7,23 @@ export async function getLinks(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
     '/trips/:tripId/links',
     {
-      schema: { params: z.object({ tripId: z.string().uuid() }) },
+      schema: {
+        summary: 'Get the links of a trip.',
+        tags: ['trips'],
+        params: z.object({ tripId: z.string().uuid() }),
+        response: {
+          200: z.object({
+            links: z.array(
+              z.object({
+                id: z.string().uuid(),
+                title: z.string().min(4),
+                url: z.string().url(),
+              }),
+            ),
+          }),
+          404: z.object({ message: z.literal('Trip not found.') }),
+        },
+      },
     },
     async (req, rep) => {
       const { tripId } = req.params

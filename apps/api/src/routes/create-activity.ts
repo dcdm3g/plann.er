@@ -9,11 +9,18 @@ export async function createActivity(app: FastifyInstance) {
     '/trips/:tripId/activities',
     {
       schema: {
+        summary: 'Create an activity in a trip.',
+        tags: ['trips'],
         params: z.object({ tripId: z.string().uuid() }),
         body: z.object({
           title: z.string().min(4),
           occursAt: z.coerce.date(),
         }),
+        response: {
+          201: z.object({ id: z.string().uuid() }),
+          404: z.object({ message: z.literal('Trip not found.') }),
+          400: z.object({ message: z.literal('Invalid activity date.') }),
+        },
       },
     },
     async (req, rep) => {

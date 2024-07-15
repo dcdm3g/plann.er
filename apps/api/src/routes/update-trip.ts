@@ -9,6 +9,8 @@ export async function updateTrip(app: FastifyInstance) {
     '/trips/:id',
     {
       schema: {
+        summary: 'Update the details of a trip.',
+        tags: ['trips'],
         params: z.object({ id: z.string().uuid() }),
         body: z
           .object({
@@ -17,6 +19,10 @@ export async function updateTrip(app: FastifyInstance) {
             endsAt: z.coerce.date(),
           })
           .refine((body) => isBefore(body.startsAt, body.endsAt)),
+        response: {
+          204: z.null(),
+          404: z.object({ message: z.literal('Trip not found.') }),
+        },
       },
     },
     async (req, rep) => {

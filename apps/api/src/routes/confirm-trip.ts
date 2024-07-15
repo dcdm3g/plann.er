@@ -10,7 +10,14 @@ export async function confirmTrip(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
     '/trips/:id/confirm',
     {
-      schema: { params: z.object({ id: z.string().uuid() }) },
+      schema: {
+        summary: 'Confirm a trip.',
+        tags: ['trips'],
+        params: z.object({ id: z.string().uuid() }),
+        response: {
+          404: z.object({ message: z.literal('Trip not found.') }),
+        },
+      },
     },
     async (req, rep) => {
       const { id } = req.params

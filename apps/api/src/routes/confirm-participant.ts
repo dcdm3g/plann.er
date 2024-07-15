@@ -9,7 +9,12 @@ export async function confirmParticipant(app: FastifyInstance) {
     '/participants/:id/confirm',
     {
       schema: {
+        summary: 'Confirm a participant.',
+        tags: ['participants'],
         params: z.object({ id: z.string().uuid() }),
+        response: {
+          404: z.object({ message: z.literal('Participant not found.') }),
+        },
       },
     },
     async (req, rep) => {

@@ -7,7 +7,24 @@ export async function getParticipants(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
     '/trips/:tripId/participants',
     {
-      schema: { params: z.object({ tripId: z.string().uuid() }) },
+      schema: {
+        summary: 'Get the participants of a trip.',
+        tags: ['trips'],
+        params: z.object({ tripId: z.string().uuid() }),
+        response: {
+          200: z.object({
+            participants: z.array(
+              z.object({
+                id: z.string().uuid(),
+                name: z.string().nullable(),
+                email: z.string().email(),
+                isConfirmed: z.boolean(),
+              }),
+            ),
+          }),
+          404: z.object({ message: z.literal('Trip not found.') }),
+        },
+      },
     },
     async (req, rep) => {
       const { tripId } = req.params

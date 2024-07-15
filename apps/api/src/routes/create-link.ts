@@ -8,8 +8,14 @@ export async function createLink(app: FastifyInstance) {
     '/trips/:tripId/links',
     {
       schema: {
+        summary: 'Create a link in a trip.',
+        tags: ['trips'],
         params: z.object({ tripId: z.string().uuid() }),
         body: z.object({ title: z.string().min(4), url: z.string().url() }),
+        response: {
+          201: z.object({ id: z.string().uuid() }),
+          404: z.object({ message: z.literal('Trip not found.') }),
+        },
       },
     },
     async (req, rep) => {

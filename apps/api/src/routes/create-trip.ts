@@ -12,6 +12,8 @@ export async function createTrip(app: FastifyInstance) {
     '/trips',
     {
       schema: {
+        summary: 'Create a trip.',
+        tags: ['trips'],
         body: z
           .object({
             destination: z.string().min(4),
@@ -22,9 +24,12 @@ export async function createTrip(app: FastifyInstance) {
             emailsToInvite: z.array(z.string().email()),
           })
           .refine((body) => isBefore(body.startsAt, body.endsAt)),
+        response: {
+          201: z.object({ id: z.string().uuid() }),
+        },
       },
     },
-    async (req) => {
+    async (req, rep) => {
       const {
         destination,
         startsAt,
@@ -67,7 +72,7 @@ export async function createTrip(app: FastifyInstance) {
         }),
       })
 
-      return { id }
+      return rep.status(201).send({ id })
     },
   )
 }
