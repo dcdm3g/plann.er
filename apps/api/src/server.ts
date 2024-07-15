@@ -29,7 +29,7 @@ app.register(swagger, {
   openapi: {
     info: {
       title: 'Plann.er API',
-      description: 'API for Plann.er',
+      description: 'API for Plann.er built during NLW Journey.',
       version: '1.0.0',
     },
     servers: [],
